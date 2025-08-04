@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "maxfrymod:block/lightning_bolt_defender"
+  }
+}
