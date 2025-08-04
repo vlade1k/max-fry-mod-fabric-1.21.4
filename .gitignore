@@ -1,4 +1,5 @@
 /run/
 /.idea/
 /build/
-/.gradle/gi
+/.gradle/
+/.PVS-Studio/
