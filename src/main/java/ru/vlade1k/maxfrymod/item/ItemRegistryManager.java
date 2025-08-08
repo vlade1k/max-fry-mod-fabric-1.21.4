@@ -16,6 +16,7 @@ import java.util.function.Function;
 public class ItemRegistryManager {
 
   public static final Item MAGIC_WAND = register("magic_wand", MagicWandItem::new, new Item.Settings().useCooldown(1));
+  public static final Item INVISIBILITY_CAPE = register("invisibility_cape", InvisibilityCapeItem::new, new Item.Settings());
 
   public static Item register(String name, Function<Settings, Item> itemFactory, Item.Settings settings) {
     RegistryKey<Item> itemKey = RegistryKey.of(RegistryKeys.ITEM, Identifier.of(MaxFryMod.MOD_ID, name));
@@ -26,5 +27,6 @@ public class ItemRegistryManager {
 
   public static void clinit() {
     ItemGroupEvents.modifyEntriesEvent(ItemGroups.INGREDIENTS).register((itemGroup) -> itemGroup.add(MAGIC_WAND));
+    ItemGroupEvents.modifyEntriesEvent(ItemGroups.INGREDIENTS).register((itemGroup) -> itemGroup.add(INVISIBILITY_CAPE));
   }
 }

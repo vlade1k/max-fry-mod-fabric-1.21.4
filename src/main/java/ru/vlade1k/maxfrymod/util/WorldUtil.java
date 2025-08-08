@@ -5,12 +5,20 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LightningEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.damage.DamageTypes;
+import net.minecraft.item.Item;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
+import ru.vlade1k.maxfrymod.item.InvisibilityCapeItem;
+
+import java.util.Set;
 
 public class WorldUtil {
+  private static final Set<Class<? extends Item>> INVISIBILITY_ITEMS = Set.of(
+      InvisibilityCapeItem.class
+  );
+
 
   public static void damageEntitiesByLightningBoltWithSpecialDamage(ServerWorld serverWorld, Iterable<Entity> entities, float damage) {
     for (var entity : entities) {
@@ -39,5 +47,9 @@ public class WorldUtil {
     serverWorld.spawnEntity(lightBoltEntity);
 
     return lightBoltEntity;
+  }
+
+  public static boolean isInvisibilityItem(Class<? extends Item> item) {
+    return INVISIBILITY_ITEMS.contains(item);
   }
 }
