@@ -19,7 +19,6 @@ public class WorldUtil {
       InvisibilityCapeItem.class
   );
 
-
   public static void damageEntitiesByLightningBoltWithSpecialDamage(ServerWorld serverWorld, Iterable<Entity> entities, float damage) {
     for (var entity : entities) {
       damageEntityByLightningBoltWithSpecialDamage(serverWorld, entity, damage);
