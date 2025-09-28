@@ -14,6 +14,6 @@ public class MaxFryMod implements ModInitializer {
     ItemRegistryManager.clinit();
     BlockRegistryManager.clinit();
     BlockEntityRegistryManager.clinit();
-    InvisibilityItemCallback.registerEvent();
+    InvisibilityItemCallback.clinit();
   }
 }
