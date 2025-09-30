@@ -1,5 +1,6 @@
 package ru.vlade1k.maxfrymod.item;
 
+import net.minecraft.entity.damage.DamageTypes;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.server.world.ServerWorld;
@@ -23,11 +24,16 @@ public class MagicWandItem extends Item {
       if (blockDist == null) {
         return ActionResult.FAIL;
       }
+      
       var blockPos = blockDist.getBlockPos();
       var lightBoltEntity = WorldUtil.spawnLightningBolt(serverWorld, blockPos);
-      WorldUtil.damageEntitiesByLightningBoltWithSpecialDamage(serverWorld,
-                                                               world.getOtherEntities(lightBoltEntity, new Box(blockPos).expand(2)),
-                                                               40f);
+      WorldUtil.damageEntitiesWithSpecialDamage(
+          serverWorld,
+          world.getOtherEntities(lightBoltEntity, new Box(blockPos).expand(2)),
+          DamageTypes.LIGHTNING_BOLT,
+          40f
+      );
+
       return ActionResult.SUCCESS;
     }
     return ActionResult.PASS;

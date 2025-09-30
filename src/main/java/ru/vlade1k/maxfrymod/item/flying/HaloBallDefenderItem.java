@@ -18,7 +18,7 @@ public class HaloBallDefenderItem extends Item {
   @Override
   public ActionResult use(World world, PlayerEntity user, Hand hand) {
     if (world instanceof ServerWorld serverWorld) {
-      var entity = new HaloBallDefenderEntity(serverWorld, user);
+      var entity = new HaloBallDefenderEntity(world, user);
       serverWorld.spawnEntity(entity);
       return ActionResult.SUCCESS;
     }

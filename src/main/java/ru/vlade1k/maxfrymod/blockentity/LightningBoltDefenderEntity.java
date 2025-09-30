@@ -2,6 +2,7 @@ package ru.vlade1k.maxfrymod.blockentity;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.entity.damage.DamageTypes;
 import net.minecraft.entity.mob.Monster;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
@@ -38,7 +39,7 @@ public class LightningBoltDefenderEntity extends BlockEntity {
       for(var entity : serverWorld.iterateEntities()) {
         if (entity instanceof Monster && WorldUtil.entityIsIntersectsWithBox(entity, new Box(blockPos).expand(20))) {
           WorldUtil.spawnLightningBolt(serverWorld, entity.getBlockPos());
-          WorldUtil.damageEntityByLightningBoltWithSpecialDamage(serverWorld, entity, 40f);
+          WorldUtil.damageEntityWithSpecialDamage(serverWorld, DamageTypes.LIGHTNING_BOLT, entity, 40f);
         }
       }
     }

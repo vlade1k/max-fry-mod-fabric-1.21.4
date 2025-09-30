@@ -4,8 +4,9 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LightningEntity;
 import net.minecraft.entity.damage.DamageSource;
-import net.minecraft.entity.damage.DamageTypes;
+import net.minecraft.entity.damage.DamageType;
 import net.minecraft.item.Item;
+import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
@@ -19,19 +20,28 @@ public class WorldUtil {
       InvisibilityCapeItem.class
   );
 
-  public static void damageEntitiesByLightningBoltWithSpecialDamage(ServerWorld serverWorld, Iterable<Entity> entities, float damage) {
+  public static void damageEntitiesWithSpecialDamage(
+        ServerWorld serverWorld,
+        Iterable<Entity> entities,
+        RegistryKey<DamageType> damageType,
+        float damage
+  ) {
     for (var entity : entities) {
-      damageEntityByLightningBoltWithSpecialDamage(serverWorld, entity, damage);
+      damageEntityWithSpecialDamage(serverWorld, damageType, entity, damage);
     }
   }
 
-  public static void damageEntityByLightningBoltWithSpecialDamage(ServerWorld serverWorld, Entity entity, float damage) {
-    entity.damage(serverWorld,
-                  new DamageSource(serverWorld.getRegistryManager()
-                      .getOrThrow(RegistryKeys.DAMAGE_TYPE)
-                      .getEntry(DamageTypes.LIGHTNING_BOLT.getValue())
-                      .get()),
-                  damage);
+  public static void damageEntityWithSpecialDamage(ServerWorld serverWorld, RegistryKey<DamageType> damageType, Entity entity, float damage) {
+    entity.damage(
+        serverWorld,
+        new DamageSource(
+            serverWorld.getRegistryManager()
+                .getOrThrow(RegistryKeys.DAMAGE_TYPE)
+                .getEntry(damageType.getValue())
+                .get()
+        ),
+        damage
+    );
   }
 
   public static boolean entityIsIntersectsWithBox(Entity entity, Box box) {
@@ -40,11 +50,13 @@ public class WorldUtil {
 
   public static LightningEntity spawnLightningBolt(ServerWorld serverWorld, BlockPos blockPos) {
     var lightBoltEntity = new LightningEntity(EntityType.LIGHTNING_BOLT, serverWorld);
-    lightBoltEntity.setPos(blockPos.getX(),
-                           blockPos.getY(),
-                           blockPos.getZ());
-    serverWorld.spawnEntity(lightBoltEntity);
+    lightBoltEntity.setPos(
+        blockPos.getX(),
+        blockPos.getY(),
+        blockPos.getZ()
+    );
 
+    serverWorld.spawnEntity(lightBoltEntity);
     return lightBoltEntity;
   }
 
