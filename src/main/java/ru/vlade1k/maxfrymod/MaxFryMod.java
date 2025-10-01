@@ -3,7 +3,7 @@ package ru.vlade1k.maxfrymod;
 import net.fabricmc.api.ModInitializer;
 import ru.vlade1k.maxfrymod.block.BlockRegistryManager;
 import ru.vlade1k.maxfrymod.blockentity.BlockEntityRegistryManager;
-import ru.vlade1k.maxfrymod.callback.InvisibilityItemCallback;
+import ru.vlade1k.maxfrymod.callback.EventRegistry;
 import ru.vlade1k.maxfrymod.item.ItemRegistryManager;
 
 public class MaxFryMod implements ModInitializer {
@@ -14,6 +14,6 @@ public class MaxFryMod implements ModInitializer {
     ItemRegistryManager.clinit();
     BlockRegistryManager.clinit();
     BlockEntityRegistryManager.clinit();
-    InvisibilityItemCallback.clinit();
+    EventRegistry.register();
   }
 }

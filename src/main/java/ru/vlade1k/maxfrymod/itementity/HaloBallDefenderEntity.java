@@ -15,24 +15,25 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraft.world.World.ExplosionSourceType;
 import ru.vlade1k.maxfrymod.item.ItemRegistryManager;
+import ru.vlade1k.maxfrymod.util.VecUtil;
 
 import java.util.UUID;
 
 public class HaloBallDefenderEntity extends Entity implements FlyingItemEntity {
+  private static final int ALIVE_TIME = 30 * 20;
+  private static final double RADIUS = 0.7;
+  private static final double THETA_DELTA = 0.15;
+  private static final double ATTACK_SPEED = 0.2;
+
   private PlayerEntity owner;
   private UUID ownerUuid;
   private Entity enemy;
   private UUID enemyUuid;
-  private static final double RADIUS = 0.7;
-  private static final double THETA_DELTA = 0.3;
-  private double xCurrCoord;
-  private double yCurrCoord;
-  private double zCurrCoord;
   private double theta;
   private boolean isAttackMod;
   private boolean isInitStage;
 
-  private static final int ALIVE_TIME = 600;
+
   private int currentTick = 0;
 
   public HaloBallDefenderEntity(EntityType<?> type, World world) {
@@ -53,35 +54,33 @@ public class HaloBallDefenderEntity extends Entity implements FlyingItemEntity {
     super.tick();
 
     if (!this.getWorld().isClient()) {
-      if (owner == null) {
-        owner = getWorld().getPlayerByUuid(ownerUuid);
-        if (owner == null) {
-          return;
-        }
+      if (currentTick == ALIVE_TIME) {
+        discard();
       }
 
-      this.currentTick += 1;
+      if (owner == null && !isOwnerInit()) {
+        return;
+      }
 
       if (!isAttackMod) {
-        this.yCurrCoord = owner.getY() + 2;
+        double y = owner.getY() + 2;
+        double x = 0;
+        double z = 0;
+
         if (isInitStage) {
-          this.xCurrCoord = owner.getX() + RADIUS;
-          this.zCurrCoord = owner.getZ() + RADIUS;
-          this.isInitStage = false;
+          x = owner.getX() + RADIUS;
+          z = owner.getZ() + RADIUS;
+          isInitStage = false;
         } else {
-          this.xCurrCoord = owner.getX() + RADIUS * Math.cos(theta);
-          this.zCurrCoord = owner.getZ() + RADIUS * Math.sin(theta);
+          x = owner.getX() + RADIUS * Math.cos(theta);
+          z = owner.getZ() + RADIUS * Math.sin(theta);
           this.theta += THETA_DELTA;
         }
 
-        this.setPos(this.xCurrCoord, this.yCurrCoord, this.zCurrCoord);
+        this.setPos(x, y, z);
 
-        if (currentTick == ALIVE_TIME) {
-          discard();
-        }
-
-        var box = Box.from(Vec3d.of(this.owner.getBlockPos())).expand(10, 0, 10);
-        var badEntity = this.getWorld().getOtherEntities(this.owner, box)
+        var badEntityBox = Box.from(Vec3d.of(this.owner.getBlockPos())).expand(10, 0, 10);
+        var badEntity = this.getWorld().getOtherEntities(this.owner, badEntityBox)
                                        .stream()
                                        .filter(entity -> entity instanceof Monster)
                                        .findFirst();
@@ -91,28 +90,20 @@ public class HaloBallDefenderEntity extends Entity implements FlyingItemEntity {
           this.enemyUuid = enemy.getUuid();
           this.isAttackMod = true;
         }
-      } else {
-        if (enemy == null) {
-          enemy = ((ServerWorld) getWorld()).getEntity(enemyUuid);
-          if (enemy == null) {
-            return;
-          }
-          this.setPos(xCurrCoord, yCurrCoord, zCurrCoord);
-        }
 
         this.currentTick += 1;
+      } else {
+        if (enemy == null) {
+          if (!isRecoveredInAttackMod()) {
+            return;
+          }
+        }
 
-        var currentPos = new Vec3d(this.getX(), this.getY(), this.getZ());
-        var enemyPos = new Vec3d(enemy.getX(), enemy.getY(), enemy.getZ());
-        var directionVector = enemyPos.subtract(currentPos);
-        var normalizedDirection = directionVector.normalize();
+        var currentPos = VecUtil.getEntityPositionVector(this);
+        var enemyPos = VecUtil.getEntityPositionVector(enemy);
+        currentPos = VecUtil.getNextCoordinatesByStep(currentPos, enemyPos, ATTACK_SPEED);
 
-        currentPos = currentPos.add(normalizedDirection.multiply(0.2));
         this.setPos(currentPos.getX(), currentPos.getY(), currentPos.getZ());
-
-        this.xCurrCoord = currentPos.getX();
-        this.yCurrCoord = currentPos.getY();
-        this.zCurrCoord = currentPos.getZ();
 
         if (enemy.getBoundingBox().intersects(currentPos, currentPos.add(3))) {
           this.getWorld().createExplosion(
@@ -127,6 +118,32 @@ public class HaloBallDefenderEntity extends Entity implements FlyingItemEntity {
         }
       }
     }
+  }
+
+
+  /**
+   * При запуске сервера, игрок загружается после инициализации мира.
+   * Соответственно, нужно смотреть, загрузился ли игрок прежде чем присваивать его
+   * Entity
+   *
+   * @return true, если пользователь загрузился и присвоился
+   */
+  private boolean isOwnerInit() {
+    owner = getWorld().getPlayerByUuid(ownerUuid);
+    return owner != null;
+  }
+
+  /**
+   * Поскольку при запуске сервера enemy может быть не инициализирован
+   * при isAttackMod = true необходимо смотреть, загружена ли enemyEntity
+   * в мир, а уже потом присваивать её этой Entity
+   *
+   * @return true, если Entity загрузилась и присвоилась полю enemy
+   */
+  public boolean isRecoveredInAttackMod() {
+    enemy = ((ServerWorld) getWorld()).getEntity(enemyUuid);
+
+    return enemy != null;
   }
 
   @Override
@@ -151,9 +168,11 @@ public class HaloBallDefenderEntity extends Entity implements FlyingItemEntity {
 
   @Override
   public void readNbt(NbtCompound nbt) {
-    this.xCurrCoord = nbt.getDouble("x_cord");
-    this.yCurrCoord = nbt.getDouble("y_cord");
-    this.zCurrCoord = nbt.getDouble("z_cord");
+    double xCurrCoord = nbt.getDouble("x_cord");
+    double yCurrCoord = nbt.getDouble("y_cord");
+    double zCurrCoord = nbt.getDouble("z_cord");
+    this.setPos(xCurrCoord, yCurrCoord, zCurrCoord);
+
     this.isAttackMod = nbt.getBoolean("is_attack_mod");
     this.isInitStage = nbt.getBoolean("is_init_stage");
     this.ownerUuid = nbt.getUuid("owner_uuid");
@@ -171,9 +190,9 @@ public class HaloBallDefenderEntity extends Entity implements FlyingItemEntity {
 
   @Override
   public NbtCompound writeNbt(NbtCompound nbt) {
-    nbt.putDouble("x_cord", xCurrCoord);
-    nbt.putDouble("y_cord", yCurrCoord);
-    nbt.putDouble("z_cord", zCurrCoord);
+    nbt.putDouble("x_cord", getX());
+    nbt.putDouble("y_cord", getY());
+    nbt.putDouble("z_cord", getZ());
     nbt.putBoolean("is_attack_mod", isAttackMod);
     nbt.putBoolean("is_init_stage", isInitStage);
     nbt.putUuid("owner_uuid", ownerUuid);

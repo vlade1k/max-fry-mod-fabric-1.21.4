@@ -6,7 +6,7 @@ import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents.StartWorldTic
 import net.minecraft.server.network.ServerPlayerEntity;
 import ru.vlade1k.maxfrymod.util.WorldUtil;
 
-public class InvisibilityItemCallback {
+public class EventRegistry {
 
   private final static StartWorldTick INVISIBILITY_ITEM_EVENT = (world -> {
     for (var entity:  world.iterateEntities()) {
@@ -26,7 +26,7 @@ public class InvisibilityItemCallback {
     }
   });
 
-  public static void clinit() {
+  public static void register() {
     ServerTickEvents.START_WORLD_TICK.register(INVISIBILITY_ITEM_EVENT);
   }
 }
