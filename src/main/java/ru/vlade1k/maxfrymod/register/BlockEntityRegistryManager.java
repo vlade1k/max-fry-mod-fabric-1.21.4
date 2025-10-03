@@ -1,4 +1,4 @@
-package ru.vlade1k.maxfrymod.blockentity;
+package ru.vlade1k.maxfrymod.register;
 
 import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
 import net.minecraft.block.Block;
@@ -8,7 +8,7 @@ import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
 import ru.vlade1k.maxfrymod.MaxFryMod;
-import ru.vlade1k.maxfrymod.block.BlockRegistryManager;
+import ru.vlade1k.maxfrymod.blockentity.LightningBoltDefenderEntity;
 
 public class BlockEntityRegistryManager {
 

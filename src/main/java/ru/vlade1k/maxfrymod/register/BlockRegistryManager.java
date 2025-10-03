@@ -1,4 +1,4 @@
-package ru.vlade1k.maxfrymod.block;
+package ru.vlade1k.maxfrymod.register;
 
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.minecraft.block.AbstractBlock;
@@ -13,6 +13,7 @@ import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.util.Identifier;
 import ru.vlade1k.maxfrymod.MaxFryMod;
+import ru.vlade1k.maxfrymod.block.LightningBoltDefenderBlock;
 
 import java.util.function.Function;
 
@@ -45,7 +46,7 @@ public class BlockRegistryManager {
     return RegistryKey.of(RegistryKeys.ITEM, Identifier.of(MaxFryMod.MOD_ID, name));
   }
 
-  public static void clinit() {
+  public static void register() {
     ItemGroupEvents.modifyEntriesEvent(ItemGroups.REDSTONE).register((itemGroup) -> itemGroup.add(LIGHT_BOLT_DEFENDER_BLOCK));
   }
 }

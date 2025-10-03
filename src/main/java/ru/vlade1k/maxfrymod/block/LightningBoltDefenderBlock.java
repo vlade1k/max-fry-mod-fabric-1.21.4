@@ -11,12 +11,12 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.event.listener.GameEventListener;
 import org.jetbrains.annotations.Nullable;
-import ru.vlade1k.maxfrymod.blockentity.BlockEntityRegistryManager;
+import ru.vlade1k.maxfrymod.register.BlockEntityRegistryManager;
 import ru.vlade1k.maxfrymod.blockentity.LightningBoltDefenderEntity;
 
 public class LightningBoltDefenderBlock extends BlockWithEntity {
 
-  protected LightningBoltDefenderBlock(Settings settings) {
+  public LightningBoltDefenderBlock(Settings settings) {
     super(settings);
   }
 

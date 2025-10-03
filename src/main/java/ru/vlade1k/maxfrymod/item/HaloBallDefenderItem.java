@@ -1,4 +1,4 @@
-package ru.vlade1k.maxfrymod.item.flying;
+package ru.vlade1k.maxfrymod.item;
 
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;

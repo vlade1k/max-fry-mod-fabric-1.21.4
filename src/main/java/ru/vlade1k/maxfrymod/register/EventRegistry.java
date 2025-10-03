@@ -1,4 +1,4 @@
-package ru.vlade1k.maxfrymod.callback;
+package ru.vlade1k.maxfrymod.register;
 
 
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;

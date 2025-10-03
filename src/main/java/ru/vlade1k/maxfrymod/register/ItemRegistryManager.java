@@ -1,4 +1,4 @@
-package ru.vlade1k.maxfrymod.item;
+package ru.vlade1k.maxfrymod.register;
 
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.minecraft.item.Item;
@@ -10,7 +10,9 @@ import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.util.Identifier;
 import ru.vlade1k.maxfrymod.MaxFryMod;
-import ru.vlade1k.maxfrymod.item.flying.HaloBallDefenderItem;
+import ru.vlade1k.maxfrymod.item.InvisibilityCapeItem;
+import ru.vlade1k.maxfrymod.item.MagicWandItem;
+import ru.vlade1k.maxfrymod.item.HaloBallDefenderItem;
 
 import java.util.function.Function;
 
@@ -26,7 +28,7 @@ public class ItemRegistryManager {
     return item;
   }
 
-  public static void clinit() {
+  public static void register() {
     ItemGroupEvents.modifyEntriesEvent(ItemGroups.INGREDIENTS).register((itemGroup) -> itemGroup.add(MAGIC_WAND));
     ItemGroupEvents.modifyEntriesEvent(ItemGroups.INGREDIENTS).register((itemGroup) -> itemGroup.add(INVISIBILITY_CAPE));
     ItemGroupEvents.modifyEntriesEvent(ItemGroups.REDSTONE).register((itemGroup) -> itemGroup.add(HALLO_BALL_DEFENDER));
