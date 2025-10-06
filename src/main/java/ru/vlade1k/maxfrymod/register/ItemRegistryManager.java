@@ -13,7 +13,7 @@ import ru.vlade1k.maxfrymod.MaxFryMod;
 import ru.vlade1k.maxfrymod.item.InvisibilityCapeItem;
 import ru.vlade1k.maxfrymod.item.MagicWandItem;
 import ru.vlade1k.maxfrymod.item.HaloBallDefenderItem;
-import ru.vlade1k.maxfrymod.item.MemoryCrystallItem;
+import ru.vlade1k.maxfrymod.item.MemoryCrystalItem;
 
 import java.util.function.Function;
 
@@ -21,7 +21,7 @@ public class ItemRegistryManager {
   public static final Item MAGIC_WAND = register("magic_wand", MagicWandItem::new, new Item.Settings().useCooldown(1));
   public static final Item INVISIBILITY_CAPE = register("invisibility_cape", InvisibilityCapeItem::new, new Item.Settings());
   public static final Item HALLO_BALL_DEFENDER = register("halo_ball", HaloBallDefenderItem::new, new Item.Settings());
-  public static final Item MEMORY_CRYSTALL = register("memory_crystall", MemoryCrystallItem::new, new Item.Settings());
+  public static final Item MEMORY_CRYSTAL = register("memory_crystal", MemoryCrystalItem::new, new Item.Settings());
 
   public static Item register(String name, Function<Settings, Item> itemFactory, Item.Settings settings) {
     RegistryKey<Item> itemKey = RegistryKey.of(RegistryKeys.ITEM, Identifier.of(MaxFryMod.MOD_ID, name));
@@ -34,6 +34,6 @@ public class ItemRegistryManager {
     ItemGroupEvents.modifyEntriesEvent(ItemGroups.INGREDIENTS).register((itemGroup) -> itemGroup.add(MAGIC_WAND));
     ItemGroupEvents.modifyEntriesEvent(ItemGroups.INGREDIENTS).register((itemGroup) -> itemGroup.add(INVISIBILITY_CAPE));
     ItemGroupEvents.modifyEntriesEvent(ItemGroups.REDSTONE).register((itemGroup) -> itemGroup.add(HALLO_BALL_DEFENDER));
-    ItemGroupEvents.modifyEntriesEvent(ItemGroups.REDSTONE).register((itemGroup) -> itemGroup.add(MEMORY_CRYSTALL));
+    ItemGroupEvents.modifyEntriesEvent(ItemGroups.REDSTONE).register((itemGroup) -> itemGroup.add(MEMORY_CRYSTAL));
   }
 }
