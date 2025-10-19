@@ -9,6 +9,7 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.PersistentState;
 import org.jetbrains.annotations.Nullable;
 import ru.vlade1k.maxfrymod.MaxFryMod;
+import ru.vlade1k.maxfrymod.extensiondata.data.PlayerMemoryCrystalData;
 
 import java.util.ArrayList;
 import java.util.HashMap;
