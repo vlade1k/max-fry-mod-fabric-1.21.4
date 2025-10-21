@@ -1,7 +1,9 @@
 package ru.vlade1k.maxfrymod.extensiondata;
 
+import com.mojang.serialization.Codec;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.nbt.NbtOps;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.registry.RegistryWrapper.WrapperLookup;
 import net.minecraft.server.world.ServerWorld;
@@ -24,25 +26,16 @@ public class MemoryCrystalExtensionDataHandler extends PersistentState {
   );
 
   private final HashMap<UUID, PlayerMemoryCrystalData> extensionData = new HashMap<>();
+  private static final Codec<List<Vec3d>> POSITIONS_CODEC = Vec3d.CODEC.listOf().xmap(ArrayList::new, ArrayList::new);
 
   @Override
   public NbtCompound writeNbt(NbtCompound nbt, WrapperLookup registries) {
     var playersNbt = new NbtCompound();
 
     extensionData.forEach((uuid, extensionPlayerData) -> {
-      var playerNbt = new NbtCompound();
-      var positions = new NbtCompound();
-
-      extensionPlayerData.positions().forEach(position -> {
-        var coords = new NbtCompound();
-        coords.putDouble("x", position.getX());
-        coords.putDouble("y", position.getY());
-        coords.putDouble("z", position.getZ());
-        positions.put("position", coords);
-      });
-
-      playerNbt.put("positions", positions);
-      playersNbt.put(uuid.toString(), playerNbt);
+      var positions = POSITIONS_CODEC.encodeStart(NbtOps.INSTANCE, extensionPlayerData.positions())
+                                    .getOrThrow();
+      playersNbt.put(uuid.toString(), positions);
     });
 
     nbt.put("players", playersNbt);
@@ -51,27 +44,16 @@ public class MemoryCrystalExtensionDataHandler extends PersistentState {
 
   public static MemoryCrystalExtensionDataHandler createFromNbt(NbtCompound tag, RegistryWrapper.WrapperLookup registryLookup) {
     var state = new MemoryCrystalExtensionDataHandler();
-
     var playersNbt = tag.getCompound("players");
+
     playersNbt.getKeys().forEach(key -> {
-      List<Vec3d> playerPositions = new ArrayList<>();
+      var playerUuid = UUID.fromString(key);
+      var playerNbt = playersNbt.get(key);
 
-      var playerNbt = playersNbt.getCompound(key);
+      var positions = POSITIONS_CODEC.parse(NbtOps.INSTANCE, playerNbt).getOrThrow();
+      var memoryData = new PlayerMemoryCrystalData(positions);
 
-      var positionsNbt = playerNbt.getCompound("positions");
-
-      positionsNbt.getKeys().forEach(positionKey -> {
-          NbtCompound positionNbt = positionsNbt.getCompound(positionKey);
-          Vec3d vecPosition = new Vec3d(
-              positionNbt.getDouble("x"),
-              positionNbt.getDouble("y"),
-              positionNbt.getDouble("z")
-          );
-          playerPositions.add(vecPosition);
-      });
-
-      PlayerMemoryCrystalData data = new PlayerMemoryCrystalData(playerPositions);
-      state.extensionData.put(UUID.fromString(key), data);
+      state.extensionData.put(playerUuid, memoryData);
     });
 
     return state;
