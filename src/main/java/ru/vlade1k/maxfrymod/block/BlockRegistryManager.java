@@ -31,7 +31,7 @@ public class BlockRegistryManager {
       REALISTIC_TORCH_BLOCK = register(
           "realistic_torch",
           RealisticTorchBlock::new,
-          AbstractBlock.Settings.create().noCollision(),
+          AbstractBlock.Settings.create().noCollision().luminance(state -> state.get(RealisticTorchBlock.TORCH_LIT) ? 15 : 0),
           true
       );
 
@@ -40,7 +40,8 @@ public class BlockRegistryManager {
           "wall_realistic_torch",
           WallRealisticTorchBlock::new,
           REALISTIC_TORCH_BLOCK,
-          AbstractBlock.Settings.create().noCollision()
+          Direction.DOWN,
+          AbstractBlock.Settings.create().noCollision().luminance(state -> state.get(WallRealisticTorchBlock.WALL_TORCH_LIT) ? 15 : 0)
       );
 
   private static Block register(String blockName, Function<Settings, Block> blockCreator, Settings settings, boolean shouldBeRegistered) {
@@ -56,12 +57,18 @@ public class BlockRegistryManager {
     return Registry.register(Registries.BLOCK, blockKey, block);
   }
 
-  private static Block registerWallItem(String blockName, Function<Settings, Block> blockCreator, Block defaultBlock, Settings settings) {
+  private static Block registerWallItem(
+      String blockName,
+      Function<Settings, Block> blockCreator,
+      Block standingBlock,
+      Direction direction,
+      Settings settings
+  ) {
     RegistryKey<Block> blockKey = keyOfBlock(blockName);
     Block block = blockCreator.apply(settings.registryKey(blockKey));
 
     RegistryKey<Item> blockItemKey = keyOfItem(blockName);
-    BlockItem blockItem = new VerticallyAttachableBlockItem(defaultBlock, block, Direction.DOWN ,new Item.Settings().registryKey(blockItemKey));
+    BlockItem blockItem = new VerticallyAttachableBlockItem(standingBlock, block, direction ,new Item.Settings().registryKey(blockItemKey));
     Registry.register(Registries.ITEM, blockItemKey, blockItem);
 
     return Registry.register(Registries.BLOCK, blockKey, block);
