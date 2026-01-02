@@ -1,8 +1,10 @@
 {
   "item.maxfrymod.magic_wand": "Волшебная палка",
-  "block.maxfrymod.lightning_bolt_defender": "Грозный убийца",
-  "item.maxfrymod.lightning_bolt_defender": "Грозный убийца",
+  "block.maxfrymod.lightning_bolt_defender": "Молниеносный защитник",
+  "item.maxfrymod.lightning_bolt_defender": "Молниеносный защитник",
   "item.maxfrymod.invisibility_cape": "Плащ-невидимка",
   "item.maxfrymod.halo_ball": "Шар-защитник",
-  "item.maxfrymod.memory_crystal": "Кристал памяти"
+  "item.maxfrymod.memory_crystal": "Кристал памяти",
+  "itemGroup.commonMFModGroup": "Общая группа MFMod",
+  "item.maxfrymod.wall_realistic_torch": "Реалистичный факел"
 }
