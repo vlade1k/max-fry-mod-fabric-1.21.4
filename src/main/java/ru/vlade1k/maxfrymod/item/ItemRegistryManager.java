@@ -9,10 +9,7 @@ import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.util.Identifier;
 import ru.vlade1k.maxfrymod.MaxFryMod;
-import ru.vlade1k.maxfrymod.item.HaloBallDefenderItem;
-import ru.vlade1k.maxfrymod.item.InvisibilityCapeItem;
-import ru.vlade1k.maxfrymod.item.MagicWandItem;
-import ru.vlade1k.maxfrymod.item.MemoryCrystalItem;
+import ru.vlade1k.maxfrymod.ItemGroupRegistryManager;
 
 import java.util.function.Function;
 
