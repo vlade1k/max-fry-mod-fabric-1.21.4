@@ -1,4 +1,4 @@
-package ru.vlade1k.maxfrymod.itementity;
+package ru.vlade1k.maxfrymod.item.itementity;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -32,7 +32,6 @@ public class HaloBallDefenderEntity extends Entity implements FlyingItemEntity {
   private double theta;
   private boolean isAttackMod;
   private boolean isInitStage;
-
 
   private int currentTick = 0;
 
@@ -142,7 +141,6 @@ public class HaloBallDefenderEntity extends Entity implements FlyingItemEntity {
    */
   public boolean isRecoveredInAttackMod() {
     enemy = ((ServerWorld) getWorld()).getEntity(enemyUuid);
-
     return enemy != null;
   }
 
