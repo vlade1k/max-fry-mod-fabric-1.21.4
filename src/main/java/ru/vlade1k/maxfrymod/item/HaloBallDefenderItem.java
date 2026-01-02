@@ -8,7 +8,7 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.world.World;
-import ru.vlade1k.maxfrymod.itementity.HaloBallDefenderEntity;
+import ru.vlade1k.maxfrymod.item.itementity.HaloBallDefenderEntity;
 
 public class HaloBallDefenderItem extends Item {
   public HaloBallDefenderItem(Settings settings) {

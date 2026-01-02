@@ -8,7 +8,7 @@ import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
 import ru.vlade1k.maxfrymod.MaxFryMod;
-import ru.vlade1k.maxfrymod.blockentity.LightningBoltDefenderEntity;
+import ru.vlade1k.maxfrymod.block.blockentity.LightningBoltDefenderEntity;
 
 public class BlockEntityRegistryManager {
 
