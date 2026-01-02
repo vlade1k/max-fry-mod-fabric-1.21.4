@@ -5,6 +5,7 @@ import ru.vlade1k.maxfrymod.network.PayloadRegister;
 import ru.vlade1k.maxfrymod.network.receiver.TeleportationDataReceiver;
 import ru.vlade1k.maxfrymod.register.BlockEntityRegistryManager;
 import ru.vlade1k.maxfrymod.register.BlockRegistryManager;
+import ru.vlade1k.maxfrymod.register.ItemGroupRegistryManager;
 import ru.vlade1k.maxfrymod.register.ItemRegistryManager;
 
 public class MaxFryMod implements ModInitializer {
@@ -12,6 +13,7 @@ public class MaxFryMod implements ModInitializer {
 
   @Override
   public void onInitialize() {
+    ItemGroupRegistryManager.register();
     ItemRegistryManager.register();
     BlockRegistryManager.register();
 

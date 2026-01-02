@@ -6,7 +6,6 @@ import net.minecraft.block.AbstractBlock.Settings;
 import net.minecraft.block.Block;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroups;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
@@ -18,7 +17,6 @@ import ru.vlade1k.maxfrymod.block.LightningBoltDefenderBlock;
 import java.util.function.Function;
 
 public class BlockRegistryManager {
-
   public static final Block
       LIGHT_BOLT_DEFENDER_BLOCK = register("lightning_bolt_defender",
                                            LightningBoltDefenderBlock::new,
@@ -47,6 +45,7 @@ public class BlockRegistryManager {
   }
 
   public static void register() {
-    ItemGroupEvents.modifyEntriesEvent(ItemGroups.REDSTONE).register((itemGroup) -> itemGroup.add(LIGHT_BOLT_DEFENDER_BLOCK));
+    ItemGroupEvents.modifyEntriesEvent(ItemGroupRegistryManager.COMMON_GROUP_KEY)
+                   .register((itemGroup) -> itemGroup.add(LIGHT_BOLT_DEFENDER_BLOCK));
   }
 }
