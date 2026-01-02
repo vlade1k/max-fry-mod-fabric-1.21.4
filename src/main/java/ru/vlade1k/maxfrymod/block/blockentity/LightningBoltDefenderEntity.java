@@ -1,4 +1,4 @@
-package ru.vlade1k.maxfrymod.blockentity;
+package ru.vlade1k.maxfrymod.block.blockentity;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
