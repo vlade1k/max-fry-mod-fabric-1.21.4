@@ -1,4 +1,4 @@
-package ru.vlade1k.maxfrymod.register;
+package ru.vlade1k.maxfrymod;
 
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
 import net.minecraft.item.ItemGroup;
