@@ -14,7 +14,7 @@ import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraft.world.World.ExplosionSourceType;
-import ru.vlade1k.maxfrymod.register.ItemRegistryManager;
+import ru.vlade1k.maxfrymod.item.ItemRegistryManager;
 import ru.vlade1k.maxfrymod.util.VecUtil;
 
 import java.util.UUID;
