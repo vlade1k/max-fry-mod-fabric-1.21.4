@@ -1,4 +1,4 @@
-package ru.vlade1k.maxfrymod.itementity;
+package ru.vlade1k.maxfrymod.item.itementity;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
