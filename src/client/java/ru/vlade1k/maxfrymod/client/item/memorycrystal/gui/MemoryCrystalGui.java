@@ -1,7 +1,6 @@
 package ru.vlade1k.maxfrymod.client.item.memorycrystal.gui;
 
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
-import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.text.Text;
@@ -47,7 +46,6 @@ public class MemoryCrystalGui extends Screen {
             if (this.client == null || this.client.player == null) {
               return;
             }
-
             var teleportData = new PlayerTeleportationData(
                 this.client.player.getUuid(),
                 currentPosition
@@ -61,15 +59,5 @@ public class MemoryCrystalGui extends Screen {
 
       yPosition += BUTTON_HEIGHT + (heightInPercent * 5);
     }
-  }
-
-  @Override
-  public void render(DrawContext context, int mouseX, int mouseY, float delta) {
-    super.render(context, mouseX, mouseY, delta);
-  }
-
-  @Override
-  public boolean shouldPause() {
-    return false;
   }
 }

@@ -9,7 +9,6 @@ import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
-import ru.vlade1k.maxfrymod.MaxFryMod;
 
 public class ItemGroupRegistryManager {
   public static final RegistryKey<ItemGroup>

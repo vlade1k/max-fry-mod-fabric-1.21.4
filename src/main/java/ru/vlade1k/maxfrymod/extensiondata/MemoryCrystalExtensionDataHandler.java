@@ -34,7 +34,7 @@ public class MemoryCrystalExtensionDataHandler extends PersistentState {
 
     extensionData.forEach((uuid, extensionPlayerData) -> {
       var positions = POSITIONS_CODEC.encodeStart(NbtOps.INSTANCE, extensionPlayerData.positions())
-                                    .getOrThrow();
+                                     .getOrThrow();
       playersNbt.put(uuid.toString(), positions);
     });
 
