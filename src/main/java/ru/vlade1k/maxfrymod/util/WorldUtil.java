@@ -31,7 +31,12 @@ public class WorldUtil {
     }
   }
 
-  public static void damageEntityWithSpecialDamage(ServerWorld serverWorld, RegistryKey<DamageType> damageType, Entity entity, float damage) {
+  public static void damageEntityWithSpecialDamage(
+      ServerWorld serverWorld,
+      RegistryKey<DamageType> damageType,
+      Entity entity,
+      float damage
+  ) {
     entity.damage(
         serverWorld,
         new DamageSource(
@@ -55,7 +60,6 @@ public class WorldUtil {
         blockPos.getY(),
         blockPos.getZ()
     );
-
     serverWorld.spawnEntity(lightBoltEntity);
     return lightBoltEntity;
   }
