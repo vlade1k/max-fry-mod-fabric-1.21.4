@@ -11,7 +11,7 @@ import net.minecraft.util.Hand;
 import net.minecraft.world.World;
 import ru.vlade1k.maxfrymod.extensiondata.MemoryCrystalExtensionDataHandler;
 import ru.vlade1k.maxfrymod.network.s2c.MemoryCrystalS2CPayload;
-import ru.vlade1k.maxfrymod.util.PlayerUtility;
+import ru.vlade1k.maxfrymod.util.PlayerUtil;
 
 public class MemoryCrystalItem extends Item {
 
@@ -22,7 +22,7 @@ public class MemoryCrystalItem extends Item {
   @Override
   public ActionResult use(World world, PlayerEntity player, Hand hand) {
     if (world instanceof ServerWorld serverWorld) {
-      var playerViewBlockPos = PlayerUtility.getBlockHitResultWithDist(serverWorld, player, 2.5d).getBlockPos();
+      var playerViewBlockPos = PlayerUtil.getBlockHitResultWithDist(serverWorld, player, 2.5d).getBlockPos();
       var block = serverWorld.getBlockState(playerViewBlockPos).getBlock();
 
       if (Blocks.AIR.equals(block)) {

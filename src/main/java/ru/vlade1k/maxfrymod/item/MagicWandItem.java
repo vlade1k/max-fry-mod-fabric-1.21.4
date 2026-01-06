@@ -8,7 +8,7 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.Box;
 import net.minecraft.world.World;
-import ru.vlade1k.maxfrymod.util.PlayerUtility;
+import ru.vlade1k.maxfrymod.util.PlayerUtil;
 import ru.vlade1k.maxfrymod.util.WorldUtil;
 
 public class MagicWandItem extends Item {
@@ -20,7 +20,7 @@ public class MagicWandItem extends Item {
   @Override
   public ActionResult use(World world, PlayerEntity user, Hand hand) {
     if (world instanceof ServerWorld serverWorld) {
-      var blockDist = PlayerUtility.getBlockHitResultWithDist(serverWorld, user, 100D);
+      var blockDist = PlayerUtil.getBlockHitResultWithDist(serverWorld, user, 100D);
       if (blockDist == null) {
         return ActionResult.FAIL;
       }

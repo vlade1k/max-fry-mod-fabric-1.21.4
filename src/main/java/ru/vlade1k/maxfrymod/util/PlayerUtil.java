@@ -8,7 +8,7 @@ import net.minecraft.world.RaycastContext.FluidHandling;
 import net.minecraft.world.RaycastContext.ShapeType;
 import net.minecraft.world.World;
 
-public class PlayerUtility {
+public class PlayerUtil {
 
   public static BlockHitResult getBlockHitResultWithDist(World world, PlayerEntity player, double dist) {
     Vec3d vec3d = player.getEyePos();
